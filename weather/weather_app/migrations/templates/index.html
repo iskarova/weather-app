@@ -2,7 +2,29 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Title</title>
+    <title>Weather</title>
   </head>
-  <body></body>
+
+  <body>
+    <form method="post">
+      {% csrf_token %}
+      <input name="first_city" placeholder="First City" />
+      <input name="second_city" placeholder="Second City" />
+      <button type="submit">Compare Weather</button>
+    </form>
+
+    <div class="comparison-container">
+      {% if weather_data_1 %}
+      <div class="city-container">
+        {% include "weather_app/city_weather.html" with
+        weather_data=weather_data_1 daily_forecasts=daily_forecasts_1 %}
+      </div>
+      {% endif %} {% if weather_data_2 %}
+      <div class="city-container">
+        {% include "weather_app/city_weather.html" with
+        weather_data=weather_data_2 daily_forecasts=daily_forecasts_2 %}
+      </div>
+      {% endif %}
+    </div>
+  </body>
 </html>
