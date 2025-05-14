@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Weather</title>
+  </head>
+
+  <body>
+    <form method="post">
+      {% csrf_token %}
+      <input type="text" name="first_city" placeholder="First City" />
+      <input type="text" name="second_city" placeholder="Second City" />
+      <button type="submit">Compare Weather</button>
+    </form>
+
+    <div class="comparison-container">
+      {% if weather_data_1 %}
+      <div class="city-container">
+        <h1>{{ weather_data_1.city }}</h1>
+        <h2>{{ weather_data_1.temperature }}°C</h2>
+        <p>{{ weather_data_1.description }}</p>
+        <img
+          src="http://openweathermap.org/img/w/{{ weather_data_1.icon }}.png"
+          alt="{{  weather_data_1.description  }}" />
+      </div>
+      {% endif %} {% if weather_data_2 %}
+      <div class="city-container">
+        <h1>{{ weather_data_2.city }}</h1>
+        <h2>{{ weather_data_2.temperature }}°C</h2>
+        <p>{{ weather_data_2.description }}</p>
+        <img
+          src="http://openweathermap.org/img/w/{{ weather_data_2.icon }}.png"
+          alt="{{  weather_data_2.description  }}" />
+      </div>
+      {% endif %}
+    </div>
+  </body>
+</html>
