@@ -43,6 +43,9 @@ def index(request):
 def fetch_info(city, api_key, current_weather_url):
   curr_response = requests.get(current_weather_url.format(city, api_key)).json()
   
+  if curr_response['cod'] == '404':
+    return None
+  
   weather_data = {
     "city": city,
     "temperature": round(curr_response['main']['temp'] - 273.15, 2),
