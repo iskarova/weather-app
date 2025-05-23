@@ -12,11 +12,17 @@ def index(request):
     first_city = request.POST["first_city"]
     second_city = request.POST.get("second_city", None)
     
-    weather_data_1 = fetch_info(first_city, API_KEY, current_weather_url)
-    
-    if second_city:
+    if first_city and second_city:
+      weather_data_1 = fetch_info(first_city, API_KEY, current_weather_url)
       weather_data_2 = fetch_info(second_city, API_KEY, current_weather_url)
+    elif first_city:
+      weather_data_1 = fetch_info(first_city, API_KEY, current_weather_url)
+      weather_data_2 = None
+    elif second_city:
+      weather_data_2 = fetch_info(second_city, API_KEY, current_weather_url)
+      weather_data_1 = None
     else: 
+      weather_data_1 = None
       weather_data_2 = None
       
     context = {
@@ -37,5 +43,5 @@ def fetch_info(city, api_key, current_weather_url):
     "description": curr_response["weather"][0]["description"],
     "icon": curr_response["weather"][0]["icon"]
   }
-
-  return weather_data  
+  
+  return weather_data
